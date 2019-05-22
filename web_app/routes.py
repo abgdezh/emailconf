@@ -1,30 +1,30 @@
 from flask import render_template, flash, redirect, url_for, request
-from web_app import app
-import web_app
-from config import Config
-from web_app.forms import LoginForm, RegisterForm, ConfirmationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_mail import Message
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 
-from web_app.models import *
-
 from itsdangerous import URLSafeTimedSerializer
 
-
+from web_app import app
+import web_app
+from web_app.models import *
+from web_app.forms import LoginForm, RegisterForm, ConfirmationForm
+from config import Config
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
+    print('Index')
     user = {'username': current_user.username}
     return render_template('index.html', user=user, title='Home')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    print('Login')
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -49,11 +49,13 @@ def login():
 @login_required
 @app.route('/logout')
 def logout():
+    print('Logout')
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    print('Register')
     form = RegisterForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, password_hash=generate_password_hash(form.password.data), is_active=False)
@@ -72,6 +74,7 @@ def register():
     
 @app.route('/confirm/<code>', methods=['GET', 'POST'])
 def confirm(code):
+    print('Confirm')
     serializer = URLSafeTimedSerializer(Config.SECRET_KEY)
     data = serializer.loads(
         code
