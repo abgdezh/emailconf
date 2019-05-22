@@ -18,6 +18,9 @@ class User(db.Model, UserMixin):
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
-db.create_all()
-db.session.commit()
+
+try:
+    db.create_all()
+    db.session.commit()
+except Exception as e:
+    print(e)
