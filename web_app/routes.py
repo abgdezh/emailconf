@@ -67,7 +67,12 @@ def register():
                        sender="emailconf@bk.ru",
                        recipients=[form.email.data])
         msg.body = "Please confirm your email address and visit http://emailconf.herokuapp.com/confirm/" + dumped
-        web_app.mail.send(msg)
+        try:
+            web_app.mail.send(msg)
+        except Exception as e:
+            print(e)
+            flash('Your email is inappropriate')
+            return redirect('/register')
         flash('Check your email')
         return redirect('/login')
     return render_template('register.html', title='Sign up', form=form)
