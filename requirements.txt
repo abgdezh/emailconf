@@ -18,3 +18,4 @@ gunicorn
 psycopg2
 Flask-Mail
 Flask-Bootstrap
+pika
