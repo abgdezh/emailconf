@@ -64,7 +64,7 @@ def register():
         msg = Message("Confirmation Letter",
                        sender="emailconf@bk.ru",
                        recipients=[form.email.data])
-        msg.body = "Please confirm your email address and visit http://127.0.0.1:5000/confirm/" + dumped
+        msg.body = "Please confirm your email address and visit http://emailconf.herokuapp.com/confirm/" + dumped
         web_app.mail.send(msg)
         flash('Check your email')
         return redirect('/login')

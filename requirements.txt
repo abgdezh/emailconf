@@ -18,3 +18,4 @@ flask-login
 gunicorn
 psycopg2
 Flask-Mail
+Flask-Bootstrap
