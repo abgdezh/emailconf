@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>Confirm your registration</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
